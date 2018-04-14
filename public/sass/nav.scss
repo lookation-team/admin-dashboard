@@ -1,0 +1,21 @@
+$navBarColor: #a39180;
+
+.nav-bar {
+    background-color: $navBarColor;
+}
+
+.nav-bar i {
+    cursor: pointer;
+}
+
+.visible {
+    display: inline-block !important;
+} 
+
+.adjust-borders {
+    padding-right: 50px;
+}
+
+.text-style {
+    font-family: roboto;
+}

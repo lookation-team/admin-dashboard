@@ -1,0 +1,19 @@
+.nav-bar {
+  background-color: #a39180; }
+
+.nav-bar i {
+  cursor: pointer; }
+
+.visible {
+  display: inline-block !important; }
+
+.adjust-borders {
+  padding-right: 50px; }
+
+.text-style {
+  font-family: roboto; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: roboto sans-serif; }

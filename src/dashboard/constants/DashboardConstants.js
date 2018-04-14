@@ -1,0 +1,3 @@
+module.exports = {
+    RECEIVE_ALL_POSITIONS: 'RECEIVE_ALL_POSITIONS'
+}
