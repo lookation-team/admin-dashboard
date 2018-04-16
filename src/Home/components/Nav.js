@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
+import { initSidenav } from '../../utils/MaterializeUtil'
 
-const $ = window.$
 
 class Nav extends Component {
     render() {
@@ -11,6 +11,7 @@ class Nav extends Component {
                         <i data-target="slide-out" className="sidenav-trigger medium material-icons">menu</i>
                         <ul id='nav-mobile' className='right hide-on-med-and-down'>
                             <li>Lookation</li>
+                            <li className='active'><a>Logout</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -36,9 +37,7 @@ class Nav extends Component {
     }
 
     componentDidMount() {
-        $(document).ready(function(){
-            $('.sidenav').sidenav();
-        });
+        initSidenav('.sidenav')
     }
 }
 

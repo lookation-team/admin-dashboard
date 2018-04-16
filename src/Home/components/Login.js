@@ -6,9 +6,27 @@ import HomeActions from '../actions/HomeActions'
 const $ = window.$
 
 class Login extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            email: '',
+            password: ''
+        }
+        this.onLogin = this.onLogin.bind(this)
+    }
+
     onLogin() {
-        Store.dispatch(HomeActions.login('julien@test.fr', 'password'))
-       // Store.dispatch(push('/'))
+        Store.dispatch(HomeActions.login(this.state.email, this.state.password))
+    }
+
+    handleChanges = (event) => {
+        const element = event.target.dataset.mode
+        const value = event.target.value
+        this.setState(prevState => {
+            prevState[element] = value
+            return prevState
+        })
     }
 
     render() {
@@ -21,13 +39,13 @@ class Login extends Component {
                                 <form className='col s12'>
                                     <div className='row'>
                                         <div className='input-field col s12'>
-                                            <input id='email' type='email' className='validate'/>
+                                            <input id='email' data-mode='email' ref='email' type='email' className='validate' onChange={this.handleChanges}/>
                                             <label htmlFor='email'>Email</label>
                                         </div>
                                     </div>
                                     <div className='row'>
                                         <div className='input-field col s12'>
-                                            <input id='password' type='password' className='validate'/>
+                                            <input id='password' data-mode='password' ref='password' type='password' className='validate' onChange={this.handleChanges}/>
                                             <label htmlFor='password'>Password</label>
                                         </div>
                                     </div>

@@ -13,6 +13,9 @@
 .text-style {
   font-family: roboto; }
 
+#nav-mobile li {
+  margin-right: 10px; }
+
 body {
   margin: 0;
   padding: 0;
