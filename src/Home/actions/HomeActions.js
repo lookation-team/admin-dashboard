@@ -15,6 +15,7 @@ const HomeActions = {
                 body: JSON.stringify({
                     email: email,
                     password: password
+                    //scope: ['admin']
                 })
             })
             .then(res => res.json())
@@ -28,11 +29,18 @@ const HomeActions = {
             })
         }
     },
-    
+
     setLoginState(loginState) {
         return {
             type: SET_LOGIN_STATE,
             loginState: loginState
+        }
+    },
+
+    logout() {
+        return dispatch => {
+            localStorage.removeItem(LOOKATION_TOKEN)
+            dispatch(push('/'))
         }
     }
 }

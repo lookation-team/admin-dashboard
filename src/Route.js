@@ -10,8 +10,7 @@ import Login from './Home/components/Login.js'
 import { getPayload, getLoginPassword } from './utils/ActionUtils'
 import moment from 'moment'
 import AuthRoute from './components/routes/AuthRoute'
-
-
+import Admin from './Admin/components/Admin'
 
 export const Routes = () => {
     console.log(Provider, ConnectedRouter)
@@ -22,9 +21,13 @@ export const Routes = () => {
                     <div>
                         <Nav />
                     </div>
-                    <AuthRoute path='/' exact component={Dashboard}/>
-                    <AuthRoute path='/dashboard' exact component={Dashboard}/>
-                    <Route path='/login' exact component={Login}/>
+                    <Switch>
+                        <AuthRoute path='/' exact component={Dashboard}/>
+                        <AuthRoute path='/dashboard' exact component={Dashboard}/>
+                        <AuthRoute path='/admin' exact component={Admin}/>
+                        <Route path='/login' exact component={Login}/>
+                        <AuthRoute component={Dashboard}/>
+                    </Switch>
                 </div>
             </ConnectedRouter>
         </Provider>

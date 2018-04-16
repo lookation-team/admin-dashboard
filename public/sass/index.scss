@@ -1,6 +1,8 @@
-@import './nav.scss';
-@import './login.scss';
-@import './dashboard.scss';
+@import './nav';
+@import './login';
+@import './dashboard';
+@import './constants';
+@import './looketion-theme';
 
 body {
     margin: 0;
