@@ -57,7 +57,7 @@ const getPayload = () => {
     const token = localStorage.getItem(LOOKATION_TOKEN)
     if (token && token !== 'undefined') {
         try {
-            return atob(token.split('.')[1])
+            return JSON.parse(atob(token.split('.')[1]))
         } catch (err) {
             return ''
         }
@@ -68,7 +68,7 @@ const getPayload = () => {
 const isAuthenticated = () => {
     const payload = getPayload()
     if (payload) {
-        const exp = moment(JSON.parse(payload).exp)
+        const exp = moment(payload.exp)
         return moment().isAfter(exp)
     }
     return false

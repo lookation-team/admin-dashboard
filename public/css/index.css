@@ -16,7 +16,86 @@
 #nav-mobile li {
   margin-right: 10px; }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: roboto sans-serif; }
+body div #main-nav nav {
+  background: linear-gradient(141deg, #145d65 0%, #069172 20%, #02ba6a 80%); }
+  body div #main-nav nav div.arrow-nav {
+    position: relative;
+    left: 0.5rem; }
+
+body div .sidenav .user-view div > a > i {
+  text-shadow: 1px 1px 2px #145d65; }
+
+body div .sidenav .user-view a > span {
+  font-size: 1.2em;
+  text-shadow: 1px 1px 2px #0f3055; }
+
+* {
+  box-sizing: border-box !important; }
+
+body div .main-color {
+  color: #0f3055 !important; }
+
+body div .main-color-bg {
+  background-color: #0f3055 !important; }
+
+body div .accent-color {
+  color: #817b7b !important; }
+
+body div .accent-color-bg {
+  background-color: #817b7b !important; }
+
+body div .second-color {
+  color: #02ba6a !important; }
+
+body div .second-color-bg {
+  background-color: #02ba6a !important; }
+
+body div .text-shadow {
+  text-shadow: 1px 1px 2px #0f3055; }
+
+body div .shadow {
+  box-shadow: 1px 1px 2px #0f3055; }
+
+body div .hidden {
+  display: none !important; }
+
+body div .no-margin {
+  margin: 0 !important; }
+
+body div .no-margin-v {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important; }
+
+body div .no-margin-h {
+  margin-left: 0 !important;
+  margin-right: 0 !important; }
+
+body div .no-padding {
+  padding: 0 !important; }
+
+body div .no-padding-v {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important; }
+
+body div .no-padding-h {
+  padding-left: 0 !important;
+  padding-right: 0 !important; }
+
+div#toast-container > div.toast {
+  width: fit-content;
+  max-width: 90vw;
+  padding: 8px 30px;
+  text-align: center;
+  border-radius: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(141deg, rgba(20, 93, 101, 0.5) 0%, rgba(6, 145, 114, 0.5) 20%, rgba(2, 186, 106, 0.5) 80%);
+  background-color: white;
+  -webkit-box-shadow: 0 0 3px #0f3055;
+  box-shadow: 0 0 3px #0f3055; }
+  div#toast-container > div.toast.error {
+    background: linear-gradient(141deg, rgba(15, 51, 88, 0.4) 0%, #9f1e1c 60%);
+    background-color: #9f1e1c; }
+  div#toast-container > div.toast.success {
+    background: linear-gradient(141deg, rgba(15, 51, 88, 0.4) 0%, #36d463);
+    background-color: #36d463; }

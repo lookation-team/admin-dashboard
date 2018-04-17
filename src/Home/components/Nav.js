@@ -6,14 +6,17 @@ import {
 import Store from '../../store/Store'
 import HomeAction from '../actions/HomeActions'
 import { push } from 'react-router-redux'
+import lookerDto from '../dto/lookerDto'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 class Nav extends Component {
     render() {
         const sidenav = this.isConnected() ? this.getSideNav() : null
 
         return(
-            <div>
-                <nav className='nav-bar text-style'>
+            <div id="main-nav">
+                <nav className='nav-bar text-style '>
                     <div className='nav-wrapper adjust-borders'>
                         {  
                             this.isConnected() && (
@@ -34,6 +37,10 @@ class Nav extends Component {
         initSidenav('.sidenav')
     }
 
+    componentWillMount() {
+        Store.dispatch(HomeAction.getLookerInfos())
+    }
+
     componentDidUpdate() {
         initSidenav('.sidenav')
     }
@@ -47,8 +54,8 @@ class Nav extends Component {
                             <img src='images/image-buildings.jpg'/>
                         </div>
                         <a><img className='circle' src='images/image-buildings.jpg'/></a>
-                        <a><span className='white-text name'>{this.getLookerInfo}</span></a>
-                        <a><span className='white-text email'>jdandturk@gmail.com</span></a>
+                        <a><span className='white-text name'>{this.props.looker.userName}</span></a>
+                        <a><span className='white-text email'>{this.props.looker.email}</span></a>
                     </div>
                 </li>
                 <li><a className='sidenav-close' onClick={() => this.redirect('/dashboard')}>Dashboard</a></li>
@@ -57,10 +64,6 @@ class Nav extends Component {
                 <li><a className='waves-effect sidenav-close' onClick={this.logout}>Logout</a></li>
             </ul>
         )
-    }
-
-    getLookerInfo() {
-        Store.dispatch(HomeAction.getLookerInfo())
     }
 
     logout() {
@@ -80,4 +83,14 @@ class Nav extends Component {
     }
 }
 
-export default Nav
+Nav.propTypes = {
+    looker: PropTypes.instanceOf(lookerDto)
+}
+  
+const mapStateToProps = (store) => {
+    return {
+        looker: store.HomeReducer.looker
+    }
+}
+
+export default connect(mapStateToProps)(Nav)

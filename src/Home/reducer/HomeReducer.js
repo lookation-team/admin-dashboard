@@ -1,22 +1,24 @@
-import { SET_LOGIN_STATE, LOOKERS_INFOS } from '../constants/HomeConstants'
+import { SET_LOGIN_STATE, LOOKER, RESET } from '../constants/HomeConstants'
+import looker from '../dto/lookerDto'
 
-
-export function HomeReduer(state = {}, action) {
+export function HomeReducer(state = {}, action) {
     switch (action.type) {
         case SET_LOGIN_STATE :
             return Object.assign({}, state, {
                 loginState: action.loginState
             })
-        case LOOKERS_INFOS : 
+        case LOOKER : 
             return Object.assign({}, state, {
-                firstName: action.firstName,
-                lastName: action.lastName
+                looker: new looker(action.looker)
             })
+        case RESET :
+            return Object.assign({}, HomeStore)
         default : 
             return state
     }
 }
 
 export const HomeStore = {
-    loginState: false
+    loginState: false,
+    looker: new looker()
 }

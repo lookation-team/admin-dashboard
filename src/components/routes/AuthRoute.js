@@ -12,7 +12,7 @@ class AuthRoute extends Route{
         if (!payload) {
             return false
         } else {
-            const exp = moment(JSON.parse(payload).exp)
+            const exp = moment(payload.exp)
             if (!moment().isAfter(exp)) {
                 return false
             }
@@ -21,7 +21,6 @@ class AuthRoute extends Route{
     }
 
     render() {
-        console.log(this.checkAuth())
         if(!this.checkAuth()){
             return <Redirect to="/login"/>
         }else{
