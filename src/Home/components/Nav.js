@@ -1,45 +1,96 @@
 import React, { Component } from 'react'
-
-const $ = window.$
+import { initSidenav } from '../../utils/MaterializeUtil'
+import {
+    LOOKATION_TOKEN
+} from '../constants/HomeConstants'
+import Store from '../../store/Store'
+import HomeAction from '../actions/HomeActions'
+import { push } from 'react-router-redux'
+import lookerDto from '../dto/lookerDto'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 class Nav extends Component {
     render() {
+        const sidenav = this.isConnected() ? this.getSideNav() : null
+
         return(
-            <div>
-                <nav className='nav-bar text-style'>
+            <div id="main-nav">
+                <nav className='nav-bar text-style '>
                     <div className='nav-wrapper adjust-borders'>
-                        <i data-target="slide-out" className="sidenav-trigger medium material-icons">menu</i>
+                        {  
+                            this.isConnected() && (
+                                <i data-target="slide-out" className="sidenav-trigger medium material-icons">menu</i>
+                            )
+                        }
                         <ul id='nav-mobile' className='right hide-on-med-and-down'>
                             <li>Lookation</li>
                         </ul>
+                        {sidenav}
                     </div>
-                </nav>
-                <ul id='slide-out' className='sidenav'>
-                    <li>
-                        <div className='user-view'>
-                            <div className='background'>
-                                <img src='images/image-buildings.jpg'/>
-                            </div>
-                            <a href='#user'><img className='circle' src='images/image-buildings.jpg'/></a>
-                            <a href='#name'><span className='white-text name'>Neytau</span></a>
-                            <a href='#email'><span className='white-text email'>jdandturk@gmail.com</span></a>
-                        </div>
-                    </li>
-                    <li><a href='#!'><i className='material-icons'>cloud</i>First Link With Icon</a></li>
-                    <li><a href='#!'>Second Link</a></li>
-                    <li><div className='divider'></div></li>
-                    <li><a className='subheader'>Subheader</a></li>
-                    <li><a className='waves-effect' href='#!'>Third Link With Waves</a></li>
-                </ul>
+                </nav>                
             </div>
         )
     }
 
     componentDidMount() {
-        $(document).ready(function(){
-            $('.sidenav').sidenav();
-        });
+        initSidenav('.sidenav')
+    }
+
+    componentWillMount() {
+        Store.dispatch(HomeAction.getLookerInfos())
+    }
+
+    componentDidUpdate() {
+        initSidenav('.sidenav')
+    }
+
+    getSideNav() {
+        return( 
+            <ul id='slide-out' className='sidenav'>
+                <li>
+                    <div className='user-view'>
+                        <div className='background'>
+                            <img src='images/image-buildings.jpg'/>
+                        </div>
+                        <a><img className='circle' src='images/image-buildings.jpg'/></a>
+                        <a><span className='white-text name'>{this.props.looker.userName}</span></a>
+                        <a><span className='white-text email'>{this.props.looker.email}</span></a>
+                    </div>
+                </li>
+                <li><a className='sidenav-close' onClick={() => this.redirect('/dashboard')}>Dashboard</a></li>
+                <li><a className='sidenav-close' onClick={() => this.redirect('/admin')}>Admin</a></li>
+                <li><div className='divider sidenav-close'></div></li>
+                <li><a className='waves-effect sidenav-close' onClick={this.logout}>Logout</a></li>
+            </ul>
+        )
+    }
+
+    logout() {
+        Store.dispatch(HomeAction.logout())
+    }
+
+    redirect(url) {
+        Store.dispatch(push(url))
+    }
+
+    isConnected() {
+        const token = localStorage.getItem(LOOKATION_TOKEN)
+        if (!token) {
+            return false
+        }
+        return true
     }
 }
 
-export default Nav
+Nav.propTypes = {
+    looker: PropTypes.instanceOf(lookerDto)
+}
+  
+const mapStateToProps = (store) => {
+    return {
+        looker: store.HomeReducer.looker
+    }
+}
+
+export default connect(mapStateToProps)(Nav)

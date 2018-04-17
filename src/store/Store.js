@@ -6,16 +6,19 @@ import { Route, Switch } from 'react-router-dom'
 import createHistory from 'history/createHashHistory'
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
 import { DashboardReducer, DashboardStore } from '../dashboard/reducer/DashboardReducer'
+import { HomeReducer, HomeStore } from '../Home/reducer/HomeReducer'
 
 const reducer = combineReducers({
     DashboardReducer,
+    HomeReducer,
     routing: routerReducer,
 })
 
 export const history = createHistory()
 
 const Store = createStore(reducer, {
-        DashboardReducer: DashboardStore
+        DashboardReducer: DashboardStore,
+        HomeReducer: HomeStore
     }, compose(
         applyMiddleware(thunk, routerMiddleware(history), logger)
 ))
