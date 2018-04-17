@@ -70,11 +70,13 @@ const HomeActions = {
             fetch('http://origamihome.freeboxos.fr/looker/' + token.id, {
                 method: 'GET',
                 headers: getAuthorization()
-            }).then(res => res.json())
+            }).then(checkAuth)
             .then(looker => {
                 dispatch(HomeActions.setLooker(looker))
             })
-            //.catch()
+            .catch((err) => {
+                toastError(err)
+            })
         }
     }
 }

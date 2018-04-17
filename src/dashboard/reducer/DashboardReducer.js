@@ -13,5 +13,5 @@ export function DashboardReducer(state = {}, action) {
 }
 
 export const DashboardStore = {
-    positions: []    
+    positions: []
 }
