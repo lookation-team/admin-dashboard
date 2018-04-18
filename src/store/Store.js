@@ -7,10 +7,11 @@ import createHistory from 'history/createHashHistory'
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
 import { DashboardReducer, DashboardStore } from '../dashboard/reducer/DashboardReducer'
 import { HomeReducer, HomeStore } from '../Home/reducer/HomeReducer'
-
+import { LookerReducer, LookerStore } from '../Admin/reducer/LookerReducer'
 const reducer = combineReducers({
     DashboardReducer,
     HomeReducer,
+    LookerReducer,
     routing: routerReducer,
 })
 
@@ -18,7 +19,8 @@ export const history = createHistory()
 
 const Store = createStore(reducer, {
         DashboardReducer: DashboardStore,
-        HomeReducer: HomeStore
+        HomeReducer: HomeStore,
+        LookerReducer: LookerStore
     }, compose(
         applyMiddleware(thunk, routerMiddleware(history), logger)
 ))

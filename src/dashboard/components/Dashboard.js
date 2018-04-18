@@ -5,7 +5,7 @@ class Dashboard extends Component {
         console.log(this.props)
         return(
             <div>
-                
+                Dashboard
             </div>
         )
     }
