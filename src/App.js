@@ -26,7 +26,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  positions: PropTypes.arrayOf(PropTypes.instanceOf(DtoPosition))
+  positions: PropTypes.arrayOf(PropTypes.instanceOf(DtoPosition)),
 }
 
 const mapStateToProps = (store) => {

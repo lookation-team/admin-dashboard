@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { initSidenav } from '../../utils/MaterializeUtil'
+import { initSidenav, initCollapsible } from '../../utils/MaterializeUtil'
 import {
     LOOKATION_TOKEN
 } from '../constants/HomeConstants'
@@ -26,15 +26,16 @@ class Nav extends Component {
                         <ul id='nav-mobile' className='right hide-on-med-and-down'>
                             <li>Lookation</li>
                         </ul>
-                        {sidenav}
                     </div>
-                </nav>                
+                </nav>   
+                {sidenav}             
             </div>
         )
     }
 
     componentDidMount() {
         initSidenav('.sidenav')
+        initCollapsible('.collapsible')
     }
 
     componentWillMount() {
@@ -43,6 +44,7 @@ class Nav extends Component {
 
     componentDidUpdate() {
         initSidenav('.sidenav')
+        initCollapsible('.collapsible')
     }
 
     getSideNav() {
@@ -51,15 +53,28 @@ class Nav extends Component {
                 <li>
                     <div className='user-view'>
                         <div className='background'>
-                            <img src='images/image-buildings.jpg'/>
+                            <img src='images/lookation-logo.png'/>
                         </div>
-                        <a><img className='circle' src='images/image-buildings.jpg'/></a>
+                        <div className='col s12 center-align'>
+                            <a><i className='material-icons large accent-color'>perm_identity</i></a>
+                        </div>
                         <a><span className='white-text name'>{this.props.looker.userName}</span></a>
                         <a><span className='white-text email'>{this.props.looker.email}</span></a>
                     </div>
                 </li>
-                <li><a className='sidenav-close' onClick={() => this.redirect('/dashboard')}>Dashboard</a></li>
-                <li><a className='sidenav-close' onClick={() => this.redirect('/admin')}>Admin</a></li>
+                <li><a className='sidenav-close' onClick={() => this.redirect('/dashboard')}>Dashboard</a></li>                
+                <li className='no-padding'>
+                    <ul className='collapsible collapsible-accordion'>
+                        <li>
+                            <a className='collapsible-header'><i className="material-icons no-margin">arrow_drop_down</i>Admin</a>
+                            <div className='collapsible-body'>
+                                <ul>
+                                    <li><a className='sidenav-close' onClick={() => this.redirect('/looker')}>Lookers</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
                 <li><div className='divider sidenav-close'></div></li>
                 <li><a className='waves-effect sidenav-close' onClick={this.logout}>Logout</a></li>
             </ul>
