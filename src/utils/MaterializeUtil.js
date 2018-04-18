@@ -21,4 +21,9 @@ const toastSuccess = (text, params = { classes: 'rounded success' }) => {
     toast(text, params)
 }
 
-export { initSidenav, toast, toastError, toastSuccess }
+const initCollapsible = (selector, params = {}) => {
+    const elem = document.querySelector(selector)
+    window.M.Collapsible.init(elem, params)
+}
+
+export { initSidenav, toast, toastError, toastSuccess, initCollapsible }

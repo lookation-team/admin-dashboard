@@ -7,13 +7,12 @@ import {
 import { push } from 'react-router-redux'
 import { toast, toastError } from '../../utils/MaterializeUtil'
 import { getPayload, getAuthorization, checkAuth } from '../../utils/ActionUtils'
-import { HomeReducer } from '../reducer/HomeReducer';
+import ApplicationConf from '../../conf/ApplicationConf'
 
 const HomeActions = {
     login(email, password) {
         return dispatch => {
-            /*fetch('http://192.168.1.30:3333/login', {*/
-            fetch('http://origamihome.freeboxos.fr/login', {
+            fetch(ApplicationConf.login(), {
                 method: 'POST',
                 body: JSON.stringify({
                     email: email,
@@ -67,7 +66,7 @@ const HomeActions = {
     getLookerInfos() {
         const token = getPayload()
         return dispatch => {
-            fetch('http://origamihome.freeboxos.fr/looker/' + token.id, {
+            fetch(ApplicationConf.looker.looker(token.id), {
                 method: 'GET',
                 headers: getAuthorization()
             }).then(checkAuth)

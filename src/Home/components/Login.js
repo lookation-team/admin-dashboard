@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import { push } from 'react-router-redux'
 import Store from '../../store/Store'
 import HomeActions from '../actions/HomeActions'
-
-const $ = window.$
 
 class Login extends Component {
 
