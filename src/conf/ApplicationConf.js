@@ -11,7 +11,7 @@ export default {
             return this.lookerPath()
         },
         looker(id) {
-            return this.lookerPath() + 'looker/' + id
+            return this.lookerPath() + id
         }
     }
 }
