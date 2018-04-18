@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import DtoPosition from '../dto/DtoPosition'
 import DashboardActions from '../actions/DashboardActions'
 import Store from '../../store/Store'
-import { mapIcon } from '../../assets/map-icon.png'
+import mapIcon from '../../assets/map-icon.png'
+import { find } from 'lodash'
 
 class Map extends Component {
     componentWillMount() {
@@ -24,39 +25,66 @@ class Map extends Component {
                 zoom: 5
             })
         })
+
+        const overlay = new ol.Overlay({
+            element: document.getElementById('popup-container'),
+            positioning: 'bottom-center',
+            offset: [0, -10]
+        })
+        this.map.addOverlay(overlay)
+
+        this.map.on('click', e => {
+            overlay.setPosition()
+            const features = this.map.getFeaturesAtPixel(e.pixel)
+            if (features && features[0]) {
+                const pos = find(this.props.positions, p => p.id === features[0].N.name)
+                console.log(this.props.positions, features[0].N.name)
+                console.log(features, pos)
+                if (pos) {
+                    console.log(pos)
+                    const coords = features[0].getGeometry().getCoordinates()
+                    const { userName, email } = pos
+                    overlay.getElement().innerHTML = (`<b>${userName}</b> <br/> ${email}`)
+                    overlay.setPosition(coords)
+                }
+            }
+        })
     }
 
-    /*componentDidUpdate() {
-        const points = this.props.positions.map(p => this.getPoint(p))
-        console.log(points)
-        points.forEach(p => {
-            this.map.addLayer(p) 
-        })
-    }*/
+    componentDidUpdate(prevProps) {
+        if (prevProps.positions !== this.props.positions) {
+            this.createPositions()
+        }
+    }
 
-    getPoint(position) {
-        const { longitude, latitude } = position
-        console.log(position, longitude, latitude)
-        const pos = new ol.source.Vector()
+    createPositions() {
+        this.props.positions.map(p => {
+            this.map.addLayer(this.getSimpleLayer(p.id, p.longitude, p.latitude))
+            console.log(this.map, this.map.features)
+        })
+    }
+
+    getSimpleLayer(id, longitude, latitude) {
+        const position = new ol.source.Vector()
         const vector = new ol.layer.Vector({
-            source: pos
+            source: position
         })
         const point = new ol.Feature({
             geometry: new ol.geom.Point(this.getPosition(longitude, latitude)),
-            name: position.id
+            name: id
         })
-        this.points[position.id] = point
+        this.points[id] = point
         point.setStyle(
             new ol.style.Style({
                 image: new ol.style.Icon({
-                    scale: 0.5,
+                    scale: 0.6,
                     anchor: [0.5, 1],
                     src: mapIcon
                 }),
                 zIndex: 1
             })
         )
-        pos.addFeature(point)
+        position.addFeature(point)
         return vector
     }
 
@@ -68,6 +96,7 @@ class Map extends Component {
         return(
             <div>
                 <div id='map' className='map'/>
+                <div className='arrow_box' id='popup-container'/>
             </div>
         )
     }

@@ -115,6 +115,9 @@ body div .no-padding-h {
   padding-left: 0 !important;
   padding-right: 0 !important; }
 
+body div .pointer {
+  cursor: pointer; }
+
 div#toast-container > div.toast {
   width: fit-content;
   max-width: 90vw;

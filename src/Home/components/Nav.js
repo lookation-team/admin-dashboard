@@ -60,8 +60,8 @@ class Nav extends Component {
                         <a><span className='white-text email'>{this.props.looker.email}</span></a>
                     </div>
                 </li>
-                <li><a className='sidenav-close' onClick={() => this.redirect('/dashboard')}>Dashboard</a></li>
-                <li><a className='sidenav-close' onClick={() => this.redirect('/admin')}>Admin</a></li>
+                <li><a className='sidenav-close pointer' onClick={() => this.redirect('/dashboard')}>Dashboard</a></li>
+                <li><a className='sidenav-close pointer' onClick={() => this.redirect('/admin')}>Admin</a></li>
                 <li><div className='divider sidenav-close'></div></li>
                 <li><a className='waves-effect sidenav-close' onClick={this.logout}>Logout</a></li>
             </ul>
@@ -74,6 +74,11 @@ class Nav extends Component {
 
     redirect(url) {
         Store.dispatch(push(url))
+    }
+
+    checkTokenExpiration() {
+        const token = JSON.parse(atob(localStorage.getItem(LOOKATION_TOKEN)))
+        console.log(token)
     }
 
     isConnected() {
