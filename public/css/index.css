@@ -64,6 +64,9 @@ body div .login-page button {
 body div #map.map {
   height: calc(100vh - 64px); }
 
+body div .looker-info-icon {
+  color: teal; }
+
 * {
   box-sizing: border-box !important; }
 
@@ -188,3 +191,5 @@ body div .looker-infos {
   transition: left 0.3s ease-in-out; }
   body div .looker-infos.looker-hidden {
     left: -30%; }
+  body div .looker-infos .looker-info-icon {
+    margin-right: 10px; }

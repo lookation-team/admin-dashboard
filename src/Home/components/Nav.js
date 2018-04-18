@@ -9,6 +9,7 @@ import { push } from 'react-router-redux'
 import lookerDto from '../dto/lookerDto'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { getPayload } from '../../utils/ActionUtils'
 
 class Nav extends Component {
     render() {
@@ -89,13 +90,9 @@ class Nav extends Component {
         Store.dispatch(push(url))
     }
 
-    checkTokenExpiration() {
-        const token = JSON.parse(atob(localStorage.getItem(LOOKATION_TOKEN)))
-        console.log(token)
-    }
-
     isConnected() {
         const token = localStorage.getItem(LOOKATION_TOKEN)
+        console.log(token)
         if (!token) {
             return false
         }
