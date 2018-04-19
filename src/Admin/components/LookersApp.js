@@ -10,15 +10,24 @@ class LookersApp extends Component {
     componentWillMount() {
         Store.dispatch(LookerAction.fetchLookers())
     }
+
+    componentWillUnmount() {
+        Store.dispatch(LookerAction.fetchLookers())
+    }
+
+    onDelete = (id) => {
+        console.log(id)
+        Store.dispatch(LookerAction.deleteLooker(id))
+    }
     
     render() {
         const lookerList = this.props.lookers.map(o => {
             return (
-                <tr className='pointer' key={o.id} onClick={() => this.redirect('/looker/account/' + o.id)}>
-                    <td>{o.userName}</td>
-                    <td>{o.email}</td>
+                <tr key={o.id}>
+                    <td className='pointer' onClick={() => this.redirect('/looker/account/' + o.id)}>{o.userName}</td>
+                    <td className='pointer' onClick={() => this.redirect('/looker/account/' + o.id)}>{o.email}</td>
                     <td>
-                        <i className="small material-icons delete-button">delete</i>
+                        <i className='small material-icons pointer delete-button' onClick={() => this.onDelete(o.id)} >delete</i>
                     </td>
                 </tr>
             )
