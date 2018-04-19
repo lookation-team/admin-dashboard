@@ -9,6 +9,7 @@ import { push } from 'react-router-redux'
 import lookerDto from '../dto/lookerDto'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { getPayload } from '../../utils/ActionUtils'
 
 class Nav extends Component {
     render() {
@@ -39,7 +40,9 @@ class Nav extends Component {
     }
 
     componentWillMount() {
-        Store.dispatch(HomeAction.getLookerInfos())
+        if (getPayload()) {
+            Store.dispatch(HomeAction.getLookerInfos())
+        }
     }
 
     componentDidUpdate() {
@@ -62,14 +65,14 @@ class Nav extends Component {
                         <a><span className='white-text email'>{this.props.looker.email}</span></a>
                     </div>
                 </li>
-                <li><a className='sidenav-close' onClick={() => this.redirect('/dashboard')}>Dashboard</a></li>                
+                <li><a className='sidenav-close pointer' onClick={() => this.redirect('/dashboard')}>Dashboard</a></li>                
                 <li className='no-padding'>
-                    <ul className='collapsible collapsible-accordion'>
+                    <ul className='collapsible collapsible-accordion pointer'>
                         <li>
                             <a className='collapsible-header'><i className="material-icons no-margin">arrow_drop_down</i>Admin</a>
                             <div className='collapsible-body'>
                                 <ul>
-                                    <li><a className='sidenav-close' onClick={() => this.redirect('/looker')}>Lookers</a></li>
+                                    <li><a className='sidenav-close pointer' onClick={() => this.redirect('/looker')}>Lookers</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -87,6 +90,11 @@ class Nav extends Component {
 
     redirect(url) {
         Store.dispatch(push(url))
+    }
+
+    checkTokenExpiration() {
+        const token = JSON.parse(atob(localStorage.getItem(LOOKATION_TOKEN)))
+        console.log(token)
     }
 
     isConnected() {

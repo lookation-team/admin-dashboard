@@ -1,13 +1,12 @@
-import Store from '../../store/Store'
 import { RECEIVE_ALL_POSITIONS } from '../constants/DashboardConstants'
-import { DashboardReducer } from '../reducer/DashboardReducer'
 import { checkAuth, getAuthorization } from '../../utils/ActionUtils'
 import { toastError } from '../../utils/MaterializeUtil'
+import ApplicationConf from '../../conf/ApplicationConf'
 
 const DashboardActions = {
     setInitialPositions() {
         return dispatch => {
-            fetch('http://origamihome.freeboxos.fr/position', {
+            fetch(ApplicationConf.positions(), {
                 method: 'GET',
                 headers: getAuthorization()
             })
