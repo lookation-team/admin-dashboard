@@ -4,6 +4,8 @@ import {
 import fetch from 'isomorphic-fetch'
 import moment from 'moment'
 import { toastError } from './MaterializeUtil'
+import Store from '../store/Store'
+import HomeActions from '../Home/actions/HomeActions'
 
 const removeToken = () => {
     localStorage.removeItem(LOOKATION_TOKEN)
@@ -15,6 +17,9 @@ const checkAuth = response => {
             return response.json()
         case 401:
             throw new Error('Sorry you\'re not authorised' )
+        case 403:
+            Store.dispatch(HomeActions.logout())
+            throw new Error('Session expired' )
         case 404:
             throw new Error('Sorry we canno\'t find the requested resource')
         case 500:
