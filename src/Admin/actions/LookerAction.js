@@ -68,6 +68,17 @@ const LookerAction = {
         }
     },
 
+    deleteLooker(id) {
+        return (dispatch) => {
+            return fetch(ApplicationConf.looker.delete(id), {
+                method: 'DELETE',
+                headers: getAuthorization(),
+            })
+                .then(checkAuth)
+                .then(dispatch(push('/dashboard')))
+        }
+    },
+
     reset() {
         return {
             type: RESET_LOOKER

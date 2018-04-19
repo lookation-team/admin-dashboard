@@ -13,6 +13,9 @@ export default {
         },
         put(id) {
             return `${this.lookerPath()}/${id}`
+        },
+        delete(id) {
+            return `${this.lookerPath()}/${id}`
         }
     },
     login() {
