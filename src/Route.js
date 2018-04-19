@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 import Store, { history } from './store/Store'
@@ -9,6 +9,7 @@ import Login from './Home/components/Login.js'
 import AuthRoute from './components/routes/AuthRoute'
 import LookersApp from './Admin/components/LookersApp'
 import LookerApp from './Admin/components/LookerApp'
+import { isAuthenticated } from './utils/ActionUtils'
 
 export const Routes = () => {
     return (
@@ -22,7 +23,7 @@ export const Routes = () => {
                         <AuthRoute path='/' exact component={Dashboard}/>
                         <AuthRoute path='/dashboard' exact component={Dashboard}/>
                         <AuthRoute path='/looker' exact component={LookersApp}/>
-                        <AuthRoute path='/looker/account/:id' component={LookerApp}/>
+                        <Route path='/looker/account/:id' render={props => isAuthenticated() ? <LookerApp {...props}/> : <Redirect to='/login'/>}/>
                         <Route path='/login' exact component={Login}/>
                         <AuthRoute component={Dashboard}/>
                     </Switch>

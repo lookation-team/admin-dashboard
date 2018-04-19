@@ -10,6 +10,9 @@ export default {
         },
         looker(id) {
             return `${this.lookerPath()}/${id}`
+        },
+        put(id) {
+            return `${this.lookerPath()}/${id}`
         }
     },
     login() {

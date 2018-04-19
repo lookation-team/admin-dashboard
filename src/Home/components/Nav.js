@@ -9,18 +9,18 @@ import { push } from 'react-router-redux'
 import lookerDto from '../dto/lookerDto'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getPayload } from '../../utils/ActionUtils'
+import { isAuthenticated } from '../../utils/ActionUtils'
 
 class Nav extends Component {
     render() {
-        const sidenav = this.isConnected() ? this.getSideNav() : null
+        const sidenav = isAuthenticated() ? this.getSideNav() : null
 
         return(
             <div id="main-nav">
                 <nav className='nav-bar text-style '>
                     <div className='nav-wrapper adjust-borders'>
                         {  
-                            this.isConnected() && (
+                            isAuthenticated() && (
                                 <i data-target="slide-out" className="sidenav-trigger medium material-icons">menu</i>
                             )
                         }
@@ -40,7 +40,7 @@ class Nav extends Component {
     }
 
     componentWillMount() {
-        if (getPayload()) {
+        if (isAuthenticated()) {
             Store.dispatch(HomeAction.getLookerInfos())
         }
     }
@@ -91,25 +91,12 @@ class Nav extends Component {
     redirect(url) {
         Store.dispatch(push(url))
     }
-
-    checkTokenExpiration() {
-        const token = JSON.parse(atob(localStorage.getItem(LOOKATION_TOKEN)))
-        console.log(token)
-    }
-
-    isConnected() {
-        const token = localStorage.getItem(LOOKATION_TOKEN)
-        if (!token) {
-            return false
-        }
-        return true
-    }
 }
 
 Nav.propTypes = {
     looker: PropTypes.instanceOf(lookerDto)
 }
-  
+
 const mapStateToProps = (store) => {
     return {
         looker: store.HomeReducer.looker

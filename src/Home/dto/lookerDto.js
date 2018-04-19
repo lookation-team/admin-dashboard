@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export default class {
     constructor(looker = {}) {
         this.id = looker.id
@@ -9,5 +11,20 @@ export default class {
         this.phoneNumber = looker.phoneNumber
         this.gender = looker.gender
         this.birthDate = looker.birthDate
+    }
+
+    getPutLooker() {
+        const looker = {
+            firstName: this.firstName,
+            lastName: this.lastName,
+            userName: this.userName,
+            email: this.email,
+            gender: this.gender
+            //birthDate: moment(this.birthDate, 'MMM DD, YYYY').valueOf()
+        }
+        if (this.phoneNumber) {
+            looker.phoneNumber = this.phoneNumber
+        }
+        return looker
     }
 }

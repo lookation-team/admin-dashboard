@@ -35,47 +35,47 @@ class Dashboard extends Component {
             <div id='dashboard'>
                 <div className='row no-margin'>
                     <div className={`looker-infos ${visible}`}>
-                        <ul className='collection with-header'>
+                        <ul className='collection with-header no-margin'>
                             <li className='collection-header'><h5>{ looker.userName }</h5></li>
                             <li className='collection-item'>
                                 <div>
-                                    <span className='left looker-info-icon'><i className='material-icons'>send</i></span>
+                                    <span className='left looker-info-icon'><i className='material-icons'>perm_identity</i></span>
                                     { looker.firstName }
                                 </div>
                             </li>
                             <li className='collection-item'>
                                 <div>
-                                    <span className='left looker-info-icon'><i className='material-icons'>send</i></span>
+                                    <span className='left looker-info-icon'><i className='material-icons'>perm_identity</i></span>
                                     { looker.lastName }
                                 </div>
                             </li>
                             <li className='collection-item'>
                                 <div>
-                                    <span className='left looker-info-icon'><i className='material-icons'>send</i></span>
+                                    <span className='left looker-info-icon'><i className='material-icons'>date_range</i></span>
                                     { moment(parseInt(looker.birthDate)).format('DD MM YYYY') }
                                 </div>
                             </li>
                             <li className='collection-item'>
                                 <div>
-                                    <span className='left looker-info-icon'><i className='material-icons'>send</i></span>
+                                    <span className='left looker-info-icon'><i className='material-icons'>email</i></span>
                                     { looker.email }
                                 </div>
                             </li>
                             <li className='collection-item'>
                                 <div>
-                                    <span className='left looker-info-icon'><i className='material-icons'>send</i></span>
+                                    <span className='left looker-info-icon'><i className='material-icons'>call</i></span>
                                     { looker.phone || 'Not given' }
                                 </div>
                             </li>
                             <li className='collection-item'>
                                 <div>
-                                    <span className='left looker-info-icon'><i className='material-icons'>send</i></span>
+                                    <span className='left looker-info-icon'><i className='material-icons'>wc</i></span>
                                     { looker.gender }
                                 </div>
                             </li>
                             <li className='collection-item'>
                                 <div>
-                                    <span className='left looker-info-icon'><i className='material-icons'>send</i></span>
+                                    <span className='left looker-info-icon'><i className='material-icons'>fingerprint</i></span>
                                     { looker.id }
                                 </div>
                             </li>
