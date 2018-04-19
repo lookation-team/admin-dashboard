@@ -14,11 +14,11 @@ class LookersApp extends Component {
     render() {
         const lookerList = this.props.lookers.map(o => {
             return (
-                <tr key={o.id} onClick={() => this.redirect('/looker/account/' + o.id)}>
+                <tr className='pointer' key={o.id} onClick={() => this.redirect('/looker/account/' + o.id)}>
                     <td>{o.userName}</td>
                     <td>{o.email}</td>
                     <td>
-                        <i className="small material-icons">delete</i>
+                        <i className="small material-icons delete-button">delete</i>
                     </td>
                 </tr>
             )
@@ -31,9 +31,6 @@ class LookersApp extends Component {
                         <div className='card col s8 offset-s2'>
                             <div className='card-content'>
                                 <div className='row no-margin'>
-                                    <div className='row'>
-                                        <a className='waves-effect waves-light btn' onClick={() => this.redirect('/looker/account')}>Create</a>
-                                    </div>
                                     <div className='row'>
                                         <table className='highlight'>
                                             <thead>

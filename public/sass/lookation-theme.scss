@@ -19,6 +19,16 @@ body div {
     .no-padding-v { padding-top: 0 !important; padding-bottom: 0 !important; }
     .no-padding-h { padding-left: 0 !important; padding-right: 0 !important; }
     .pointer { cursor: pointer; }
+    .delete-button {
+        background: $gradient;
+           -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent;
+           -webkit-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+    }
+    .delete-button:hover {
+        transform: scale(1.3);
+    }
 }
 
 div#toast-container > div.toast {

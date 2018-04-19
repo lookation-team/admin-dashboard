@@ -68,6 +68,9 @@ class Map extends Component {
                 const coords = features[0].getGeometry().getCoordinates()
                 const content = features.map(p => {
                     const looker = find(this.props.lookers, l => l.id === p.N.name)
+                    if (!looker) {
+                        return ''
+                    }
                     return `<span class='looker-tooltip pointer' id='${looker.id}'>${looker.email}</span>`
                 }).join('<br/>')
                 console.log(content)
