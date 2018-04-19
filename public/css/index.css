@@ -122,6 +122,16 @@ body div .no-padding-h {
 body div .pointer {
   cursor: pointer; }
 
+body div .delete-button {
+  background: linear-gradient(141deg, #145d65 0%, #069172 20%, #02ba6a 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out; }
+
+body div .delete-button:hover {
+  transform: scale(1.3); }
+
 div#toast-container > div.toast {
   width: fit-content;
   max-width: 90vw;

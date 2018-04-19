@@ -114,7 +114,7 @@ class LookerApp extends Component {
                                     </div>
                                     <div className='row'>
                                         <div className='input-field col s2 offset-s10'>
-                                            <button className='btn waves-effect waves-light' onClick={this.handleSubmit.bind(this)} type='submit' name='action' >Submit
+                                            <button className='btn waves-effect waves-light pointer' onClick={this.handleSubmit.bind(this)} type='submit' name='action' >Submit
                                                 <i className='material-icons right'>send</i>
                                             </button>
                                         </div>
