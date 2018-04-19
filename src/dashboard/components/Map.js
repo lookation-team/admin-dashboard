@@ -9,6 +9,9 @@ import mapIcon from '../../assets/map-icon.png'
 import { find, maxBy, minBy } from 'lodash'
 import LookerAction from '../../Admin/actions/LookerAction'
 import LookerListDto from '../../Admin/dto/LookerListDto'
+import { wsPath } from '../../conf/basepath'
+import { LOOKATION_TOKEN } from '../../Home/constants/HomeConstants'
+import socket from 'socket.io-client'
 
 class Map extends Component {
     componentWillMount() {
@@ -25,8 +28,29 @@ class Map extends Component {
             ],
             view: new ol.View({
                 center: ol.proj.fromLonLat([1.41,43]),
-                zoom: 5
+                zoom: 6
             })
+        })
+
+        const io = socket(wsPath, {
+            query: {
+                token: this.getToken()
+            }
+        })
+        io.on('reconnect_attempt', () => {
+            io.io.opts.query = {
+                query: this.getToken()
+            }
+        })
+
+        
+
+        io.on('lookerMouv', pos => {
+            if (!this.points[pos.id]) {
+                this.map.addLayer(this.getSimpleLayer(pos.id, pos.longitude, pos.latitude))
+            } else {
+                this.points[pos.id].getGeometry().setCoordinates(this.getPosition(pos.longitude, pos.latitude))
+            }
         })
 
         const overlay = new ol.Overlay({
@@ -34,6 +58,7 @@ class Map extends Component {
             positioning: 'bottom-center',
             offset: [0, -10]
         })
+        this.overlay = overlay
         this.map.addOverlay(overlay)
 
         this.map.on('click', e => {
@@ -56,14 +81,61 @@ class Map extends Component {
             } else {
                 this.props.onSelectLooker(null)
             }
+            if (this.path && this.pathFeature) {
+                this.path.getSource().removeFeature(this.pathFeature)
+                this.path = undefined
+                this.pathFeature = undefined
+            }
         })
 
         
     }
 
+    getToken() {
+        return localStorage.getItem(LOOKATION_TOKEN)
+    }
+
     componentDidUpdate(prevProps) {
         if (prevProps.positions !== this.props.positions && this.props.positions.length) {
             this.createPositions()
+        }
+        if (prevProps.lookerPositions.length !== this.props.lookerPositions.length) {
+            if (this.props.lookerPositions.length) {
+                if (this.path && this.pathFeature) {
+                    this.path.getSource().removeFeature(this.pathFeature)
+                }
+                
+                const points = this.props.lookerPositions.map((p, i) => {
+                    console.log(p)
+                    const position = this.getPosition(p.longitude, p.latitude)
+                    console.log(position)
+                    return this.getPosition(p.longitude, p.latitude)
+                })
+        
+                const featureLine = new ol.Feature({
+                    geometry: new ol.geom.LineString(points)
+                })
+
+                this.pathFeature = featureLine
+        
+                const vectorLine = new ol.source.Vector({})
+                vectorLine.addFeature(featureLine)
+        
+                const vectorLineLayer = new ol.layer.Vector({
+                    source: vectorLine,
+                    style: new ol.style.Style({
+                        fill: new ol.style.Fill({ color: '#0f3055', weight: 4 }),
+                        stroke: new ol.style.Stroke({ color: '#0f3055', width: 2 })
+                    })
+                })
+        
+                this.map.addLayer(vectorLineLayer)
+                this.path = vectorLineLayer
+            } else if (this.path && this.pathFeature) {
+                this.path.getSource().removeFeature(this.pathFeature)
+                this.path = undefined
+                this.pathFeature = undefined
+            }
         }
     }
 
@@ -71,13 +143,6 @@ class Map extends Component {
         this.props.positions.map(p => {
             this.map.addLayer(this.getSimpleLayer(p.id, p.longitude, p.latitude))
         })
-        /*const minX = minBy(this.props.positions, p => p.longitude).longitude 
-        const minY = minBy(this.props.positions, p => p.latitude).latitude
-        const maxX = maxBy(this.props.positions, p => p.longitude).longitude
-        const maxY = maxBy(this.props.positions, p => p.latitude).latitude
-        console.log(minX, minY, maxX, maxY)
-        console.log(this.map.getView(), this.map.getSize())
-        this.map.getView().fit(ol.proj.transformExtent([minX, minY, maxX, maxY], 'EPSG:4326', 'EPSG:3857'), {duration: 1000})*/
     }
 
     getSimpleLayer(id, longitude, latitude) {
@@ -120,12 +185,14 @@ class Map extends Component {
 
 Map.propTypes = {
     positions: PropTypes.arrayOf(PropTypes.instanceOf(DtoPosition)),
+    lookerPositions: PropTypes.arrayOf(PropTypes.instanceOf(DtoPosition)),
     lookers: PropTypes.arrayOf(PropTypes.instanceOf(LookerListDto)),
     onSelectLooker: PropTypes.func
 }
   
 const mapStateToProps = (store) => {
     return {
+        lookerPositions: store.DashboardReducer.lookerPositions,
         positions: store.DashboardReducer.positions,
         lookers: store.LookerReducer.lookers
     }

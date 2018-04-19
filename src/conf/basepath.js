@@ -1,3 +1,4 @@
 module.exports = {
-    path: 'http://origamihome.freeboxos.fr/'
+    path: 'http://origamihome.freeboxos.fr/',
+    wsPath: 'ws://origamihome.freeboxos.fr'
 }

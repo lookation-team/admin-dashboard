@@ -6,6 +6,7 @@ import Store from '../../store/Store'
 import LookerAction from '../../Admin/actions/LookerAction'
 import { connect } from 'react-redux'
 import moment from 'moment'
+import DashboardActions from '../actions/DashboardActions'
 
 class Dashboard extends Component {
     constructor(props) {
@@ -23,8 +24,13 @@ class Dashboard extends Component {
             setTimeout(() => {
                 Store.dispatch(LookerAction.receiveLooker({}))
             }, 300)
+            Store.dispatch(DashboardActions.receiveLookerPositions([]))
         }
         this.setState({ lookerId: id })
+    }
+
+    getLookerPositions(id) {
+        Store.dispatch(DashboardActions.fetchLookerPositions(id))
     }
 
     render() {
@@ -64,7 +70,7 @@ class Dashboard extends Component {
                             <li className='collection-item'>
                                 <div>
                                     <span className='left looker-info-icon'><i className='material-icons'>call</i></span>
-                                    { looker.phone || 'Not given' }
+                                    { looker.phoneNumber || 'Not given' }
                                 </div>
                             </li>
                             <li className='collection-item'>
@@ -80,6 +86,9 @@ class Dashboard extends Component {
                                 </div>
                             </li>
                         </ul>
+                        <div className='col s12 center-align margin-button'>
+                            <button type='submit' className='btn waves-effect waves-light' onClick={() => this.getLookerPositions(looker.id)}>Display looker's path</button>
+                        </div>
                     </div>
                     <div className='col s12 no-padding'>
                         <Map onSelectLooker={this.onSelectLooker}/>
