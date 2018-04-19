@@ -40,7 +40,9 @@ class Nav extends Component {
     }
 
     componentWillMount() {
-        Store.dispatch(HomeAction.getLookerInfos())
+        if (isAuthenticated()) {
+            Store.dispatch(HomeAction.getLookerInfos())
+        }
     }
 
     componentDidUpdate() {

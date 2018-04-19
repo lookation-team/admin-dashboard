@@ -4,8 +4,10 @@ import {
     RECEIVE_ALL_LOOKERS,
     RESET_LOOKER
 } from '../constants/LookerConstants'
+import { push } from 'react-router-redux'
 import ApplicationConf from '../../conf/ApplicationConf'
 import { getAuthorization, checkAuth } from '../../utils/ActionUtils'
+import LookerDto from '../../Home/dto/lookerDto'
 
 const LookerAction = {
     receiveLookers(lookers) {
@@ -43,6 +45,24 @@ const LookerAction = {
                     dispatch(LookerAction.receiveLooker(json))
                 })
                 .catch(err => {
+                    toastError(err)
+                })
+        }
+    },
+
+    updateLooker(looker, id) {
+        return (dispatch) => {
+            const dtoLooker = new LookerDto(looker)
+            return fetch(ApplicationConf.looker.put(looker.id), {
+                method: 'PUT',
+                headers: getAuthorization(),
+                body: JSON.stringify(dtoLooker.getPutLooker())
+            })
+                .then(checkAuth)
+                .then(() => {
+                    dispatch(push('/looker'))
+                })
+                .catch((err) => {
                     toastError(err)
                 })
         }

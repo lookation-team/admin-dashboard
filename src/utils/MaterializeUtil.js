@@ -26,4 +26,14 @@ const initCollapsible = (selector, params = {}) => {
     window.M.Collapsible.init(elem, params)
 }
 
-export { initSidenav, toast, toastError, toastSuccess, initCollapsible }
+const initDatepicker = (selector, params = {}) => {
+    const elem = document.querySelector(selector)
+    window.M.Datepicker.init(elem, params)
+}
+
+const initSelect = (selector, params = {}) => {
+    const elem = document.querySelector(selector)
+    window.M.FormSelect.init(elem, params)
+}
+
+export { initSidenav, toast, toastError, toastSuccess, initCollapsible, initDatepicker, initSelect }
