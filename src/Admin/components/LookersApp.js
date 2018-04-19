@@ -26,19 +26,33 @@ class LookersApp extends Component {
         console.log(lookerList)
         return(
             <div>
-                <a className='waves-effect waves-light btn' onClick={() => this.redirect('/looker/account')}>Create</a>
-                <table className='highlight'>
-                    <thead>
-                        <tr>
-                            <th>Lookers</th>
-                            <th>Email</th>
-                            <th/>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { lookerList }
-                    </tbody>
-                </table>
+                <div className='row no-margin'>
+                    <div id='file' className='col s12'>
+                        <div className='card col s8 offset-s2'>
+                            <div className='card-content'>
+                                <div className='row no-margin'>
+                                    <div className='row'>
+                                        <a className='waves-effect waves-light btn' onClick={() => this.redirect('/looker/account')}>Create</a>
+                                    </div>
+                                    <div className='row'>
+                                        <table className='highlight'>
+                                            <thead>
+                                                <tr>
+                                                    <th>Lookers</th>
+                                                    <th>Email</th>
+                                                    <th/>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                { lookerList }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
