@@ -20,5 +20,8 @@ export default {
     },
     positions() {
         return path+ 'position'
+    },
+    lookerPositions(id) {
+        return `${path}position/looker/${id}`
     }
 }

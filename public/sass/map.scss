@@ -49,6 +49,7 @@
         background-color: white;
         height: calc(100vh - 64px);
         transition: left 0.3s ease-in-out;
+        box-shadow: $shadow;
 
         &.looker-hidden{
             left: -30%;
@@ -56,6 +57,7 @@
         
         .looker-info-icon{
             margin-right: 10px;
+            color: teal;
         }
     }
  }

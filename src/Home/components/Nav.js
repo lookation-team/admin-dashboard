@@ -26,7 +26,7 @@ class Nav extends Component {
                         }
                         <ul id='nav-mobile' className='right hide-on-med-and-down'>
                             <li>Lookation</li>
-                        </ul>
+                        </ul> 
                     </div>
                 </nav>   
                 {sidenav}             
