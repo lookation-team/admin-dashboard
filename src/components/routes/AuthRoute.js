@@ -21,7 +21,6 @@ class AuthRoute extends Route{
     }
 
     render(props) {
-        console.log(props)
         if(!this.checkAuth()){
             return <Redirect to="/login"/>
         }else{
