@@ -58,7 +58,7 @@ class Dashboard extends Component {
                             <li className='collection-item'>
                                 <div>
                                     <span className='left looker-info-icon'><i className='material-icons'>date_range</i></span>
-                                    { moment(parseInt(looker.birthDate)).format('DD MM YYYY') }
+                                    { moment(looker.birthDate).format('DD/MM/YYYY') }
                                 </div>
                             </li>
                             <li className='collection-item'>

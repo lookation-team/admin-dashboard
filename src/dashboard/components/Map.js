@@ -27,8 +27,8 @@ class Map extends Component {
                 new ol.layer.Tile({source: new ol.source.OSM()})
             ],
             view: new ol.View({
-                center: ol.proj.fromLonLat([1.41,43]),
-                zoom: 6
+                center: ol.proj.fromLonLat([-1.5623725,47.2153313]),
+                zoom: 13
             })
         })
 
@@ -42,8 +42,6 @@ class Map extends Component {
                 query: this.getToken()
             }
         })
-
-        
 
         io.on('lookerMouv', pos => {
             if (!this.points[pos.id]) {
@@ -88,6 +86,9 @@ class Map extends Component {
                 this.path.getSource().removeFeature(this.pathFeature)
                 this.path = undefined
                 this.pathFeature = undefined
+                this.pointFeature.map(p => this.pointVector.getSource().removeFeature(p))
+                this.pointVector = undefined
+                this.pointFeature = undefined
             }
         })
 
@@ -106,38 +107,66 @@ class Map extends Component {
             if (this.props.lookerPositions.length) {
                 if (this.path && this.pathFeature) {
                     this.path.getSource().removeFeature(this.pathFeature)
+                    this.pointFeature.map(p => this.pointVector.getSource().removeFeature(p))
                 }
                 
                 const points = this.props.lookerPositions.map((p, i) => {
-                    console.log(p)
-                    const position = this.getPosition(p.longitude, p.latitude)
-                    console.log(position)
                     return this.getPosition(p.longitude, p.latitude)
                 })
         
                 const featureLine = new ol.Feature({
                     geometry: new ol.geom.LineString(points)
                 })
-
+                
                 this.pathFeature = featureLine
         
                 const vectorLine = new ol.source.Vector({})
+
                 vectorLine.addFeature(featureLine)
         
                 const vectorLineLayer = new ol.layer.Vector({
                     source: vectorLine,
                     style: new ol.style.Style({
-                        fill: new ol.style.Fill({ color: '#0f3055', weight: 4 }),
-                        stroke: new ol.style.Stroke({ color: '#0f3055', width: 2 })
+                        fill: new ol.style.Fill({ color: '#069172', weight: 4 }),
+                        stroke: new ol.style.Stroke({ color: '#069172', width: 2 })
                     })
                 })
         
                 this.map.addLayer(vectorLineLayer)
                 this.path = vectorLineLayer
+
+                const pointsRound = this.props.lookerPositions.map(p => {
+                    return new ol.Feature({
+                        geometry: new ol.geom.Point(this.getPosition(p.longitude, p.latitude))
+                    })
+                })
+
+                this.pointFeature = pointsRound
+
+                const vectorSource = new ol.source.Vector({
+                    features: pointsRound
+                })
+                const vector = new ol.layer.Vector({
+                    source: vectorSource,
+                    style: new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: 3,
+                            fill: new ol.style.Fill({color: '#0f3055'}),
+                            stroke: new ol.style.Stroke({color: '#069172', width: 1})
+                        })
+                    })
+                })
+
+                this.map.addLayer(vector)
+                this.pointVector = vector
+
             } else if (this.path && this.pathFeature) {
                 this.path.getSource().removeFeature(this.pathFeature)
                 this.path = undefined
                 this.pathFeature = undefined
+                this.pointFeature.map(p => this.pointVector.getSource().removeFeature(p))
+                this.pointVector = undefined
+                this.pointFeature = undefined
             }
         }
     }
