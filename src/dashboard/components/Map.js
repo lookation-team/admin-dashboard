@@ -70,14 +70,12 @@ class Map extends Component {
                     const looker = find(this.props.lookers, l => l.id === p.N.name)
                     return `<span class='looker-tooltip pointer' id='${looker.id}'>${looker.email}</span>`
                 }).join('<br/>')
-                console.log(content)
                 overlay.getElement().innerHTML = content
                 const lookerTooltips = document.getElementsByClassName('looker-tooltip')
                 for(let i = 0; i< lookerTooltips.length; i++) {
                     lookerTooltips.item(i).onclick = () => this.props.onSelectLooker(lookerTooltips.item(i).id)
                 }
                 overlay.setPosition(coords)
-                console.log(this.props.lookers, features[0].N.name)
             } else {
                 this.props.onSelectLooker(null)
             }
@@ -106,9 +104,7 @@ class Map extends Component {
                 }
                 
                 const points = this.props.lookerPositions.map((p, i) => {
-                    console.log(p)
                     const position = this.getPosition(p.longitude, p.latitude)
-                    console.log(position)
                     return this.getPosition(p.longitude, p.latitude)
                 })
         
