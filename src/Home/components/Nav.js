@@ -9,23 +9,24 @@ import { push } from 'react-router-redux'
 import lookerDto from '../dto/lookerDto'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { isAuthenticated } from '../../utils/ActionUtils'
 
 class Nav extends Component {
     render() {
-        const sidenav = this.isConnected() ? this.getSideNav() : null
+        const sidenav = isAuthenticated() ? this.getSideNav() : null
 
         return(
             <div id="main-nav">
                 <nav className='nav-bar text-style '>
                     <div className='nav-wrapper adjust-borders'>
                         {  
-                            this.isConnected() && (
+                            isAuthenticated() && (
                                 <i data-target="slide-out" className="sidenav-trigger medium material-icons">menu</i>
                             )
                         }
                         <ul id='nav-mobile' className='right hide-on-med-and-down'>
                             <li>Lookation</li>
-                        </ul>
+                        </ul> 
                     </div>
                 </nav>   
                 {sidenav}             
@@ -62,14 +63,14 @@ class Nav extends Component {
                         <a><span className='white-text email'>{this.props.looker.email}</span></a>
                     </div>
                 </li>
-                <li><a className='sidenav-close' onClick={() => this.redirect('/dashboard')}>Dashboard</a></li>                
+                <li><a className='sidenav-close pointer' onClick={() => this.redirect('/dashboard')}>Dashboard</a></li>                
                 <li className='no-padding'>
-                    <ul className='collapsible collapsible-accordion'>
+                    <ul className='collapsible collapsible-accordion pointer'>
                         <li>
                             <a className='collapsible-header'><i className="material-icons no-margin">arrow_drop_down</i>Admin</a>
                             <div className='collapsible-body'>
                                 <ul>
-                                    <li><a className='sidenav-close' onClick={() => this.redirect('/looker')}>Lookers</a></li>
+                                    <li><a className='sidenav-close pointer' onClick={() => this.redirect('/looker')}>Lookers</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -88,20 +89,12 @@ class Nav extends Component {
     redirect(url) {
         Store.dispatch(push(url))
     }
-
-    isConnected() {
-        const token = localStorage.getItem(LOOKATION_TOKEN)
-        if (!token) {
-            return false
-        }
-        return true
-    }
 }
 
 Nav.propTypes = {
     looker: PropTypes.instanceOf(lookerDto)
 }
-  
+
 const mapStateToProps = (store) => {
     return {
         looker: store.HomeReducer.looker

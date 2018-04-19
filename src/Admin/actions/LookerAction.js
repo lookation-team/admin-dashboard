@@ -1,4 +1,3 @@
-import Store from '../../store/Store'
 import { toastError } from '../../utils/MaterializeUtil'
 import { 
     RECEIVE_LOOKER,
@@ -37,10 +36,10 @@ const LookerAction = {
         return (dispatch) => {
             return fetch(ApplicationConf.looker.looker(id), {
                 method: 'GET',
-                header: getAuthorization()
+                headers: getAuthorization()
             })
                 .then(checkAuth)
-                .then((json = []) => {
+                .then((json = {}) => {
                     dispatch(LookerAction.receiveLooker(json))
                 })
                 .catch(err => {

@@ -25,5 +25,5 @@ export function LookerReducer(state = {}, action) {
 
 export const LookerStore = {
     lookers: [],
-    looker: {}
+    looker: new lookerDto()
 }
